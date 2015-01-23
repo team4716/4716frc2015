@@ -17,7 +17,7 @@ public class ElevatorDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.elevator.moveElevCIM(-0.4);
+    	Robot.elevator.moveElevCIM(-0.6);
     	System.out.println("Elevator going down");
     }
 
@@ -27,17 +27,23 @@ public class ElevatorDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if (Robot.elevator.getEncoderDistance() <= 0){
+        	return true;
+        } else {
+        	return false;
+        }
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.elevator.moveElevCIM(0);
+    	Robot.elevator.encoderReset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.elevator.moveElevCIM(0);
+    	Robot.elevator.encoderReset();
     }
 }

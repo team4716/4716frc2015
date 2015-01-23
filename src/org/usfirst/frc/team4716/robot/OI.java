@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team4716.robot.commands.BasketMoveForward;
 import org.usfirst.frc.team4716.robot.commands.BasketMoveReverse;
 import org.usfirst.frc.team4716.robot.commands.ElevatorDown;
+import org.usfirst.frc.team4716.robot.commands.ElevatorLiftProcess;
 import org.usfirst.frc.team4716.robot.commands.ElevatorUp;
 import org.usfirst.frc.team4716.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4716.robot.commands.MoveMotor;
+import org.usfirst.frc.team4716.robot.commands.MoveMotorBack;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,13 +26,17 @@ public class OI {
 	JoystickButton but3 = new JoystickButton(stick, 3);
 	JoystickButton but4 = new JoystickButton(stick, 4);
 	JoystickButton but5 = new JoystickButton(stick, 5);
+	JoystickButton but6 = new JoystickButton(stick, 6);
+	JoystickButton but7 = new JoystickButton(stick, 7);
 	
 	public OI(){
-		but1.whenPressed(new ElevatorUp());
+		but1.whenPressed(new ElevatorLiftProcess());
 		but2.whenPressed(new BasketMoveForward());
 		but3.whenPressed(new BasketMoveReverse());
-		//but4.whenPressed(new ElevatorUp());
+		but4.whenPressed(new ElevatorUp());
 		but5.whenPressed(new ElevatorDown());
+		but6.whenPressed(new MoveMotor());
+		but7.whenPressed(new MoveMotorBack());
 		
 		
 	}

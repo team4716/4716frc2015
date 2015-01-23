@@ -27,8 +27,5 @@ public class DriveTrain extends Subsystem {
     	motor.set(d);
     }
     
-    public void arcadeStick(Joystick stick){
-    	stick.getY();
-    }
 }
 

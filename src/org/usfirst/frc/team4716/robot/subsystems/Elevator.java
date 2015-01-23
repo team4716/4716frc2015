@@ -20,14 +20,17 @@ public class Elevator extends Subsystem {
     private SpeedController elevCIM;
     private Encoder elevEncoder;
     
+    //private double encodeCount;
+    
     public Elevator(){
-    	double INCHES_PER_REV = (3.14159 * 4.0);
-    	elevCIM = new Victor(RobotMap.LEFT_DRIVE_CIM);
+    	elevCIM = new Victor(RobotMap.ELEVATOR_CIM);
     	LiveWindow.addActuator("DriveTrain", "Front Left CIM", (Victor) elevCIM);
     	
     	
-    	elevEncoder = new Encoder(0, 1, false, EncodingType.k4X);
+    	elevEncoder = new Encoder(RobotMap.ELEVATOR_ENCODER_PORT_1, RobotMap.ELEVATOR_ENCDER_PORT_2,
+    							  false, EncodingType.k4X);
     	elevEncoder.setDistancePerPulse(1.0);
+    	LiveWindow.addSensor("Encoder", "Elevator Encoder", elevEncoder);
     	
     	
     }
@@ -36,19 +39,33 @@ public class Elevator extends Subsystem {
         setDefaultCommand(new StopElevator());
     }
     
-    public void encoderInchesPerRev(double distance){
-        double inches = (distance * 12);
-        double inchesPerRev = (inches / RobotMap.INCHES_PER_REV);
-    }
     
-    public void moveElevCIMUpInInches(double speed, double inches){
-    	elevCIM.set(speed);
-    	if (elevEncoder.getDistance() <= 100.0){
+    public void moveElevCIMUpInInches(double speed){
+    	if (elevEncoder.getDistance() <= RobotMap.ELEV_DISTANCE){
     		elevCIM.set(0.0);
     	}else{
     		elevCIM.set(speed);
     	}
     	
+    }
+    
+    
+    public void moveElevCIMDownInInches(double speed, boolean quad){
+    	if (quad == false){
+    		if (elevEncoder.getDistance() <= RobotMap.ELEV_DISTANCE){
+    			elevEncoder.reset();
+    			if (elevEncoder.getDistance() <= RobotMap.ELEV_DISTANCE){
+    				elevCIM.set(speed);
+    			}
+    		}
+    	}else if (quad == true)	{
+    		if (elevEncoder.getDistance() >= RobotMap.ELEV_DISTANCE){
+    			if (elevEncoder.getDistance() == 0){
+    				elevCIM.set(0.0);
+    			}else{ elevCIM.set(speed);
+    			}
+    		}
+    	}
     }
     //public void moveElevCIMUntil(double speed,)
     public double getEncoderDistance(){
@@ -67,10 +84,8 @@ public class Elevator extends Subsystem {
     }
     public void smartDashLog(){
     	SmartDashboard.putNumber("Elevator Encoder", elevEncoder.getDistance());
-    	SmartDashboard.putNumber("Elevator Encoder Count ", elevEncoder.get());
-    	SmartDashboard.putNumber("Elevator Encoder Rate", elevEncoder.getRate());
     	SmartDashboard.putNumber("Elevator Encoder Raw", elevEncoder.getRaw());
-    	SmartDashboard.putNumber("Elevator Encoder Pid?", elevEncoder.pidGet());
+    	SmartDashboard.putNumber("Elevator Encoder Number", elevEncoder.get());
     	SmartDashboard.putString(" Hello", "You suck");
     }
 }

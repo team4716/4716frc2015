@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class RobotMap {
 	
 	// ***** OBJECTS ***** //
-	//public static SpeedController frontLeftCIM;
-	//public static SpeedController frontRightCIM;
-	/*public static SpeedController elevCIM;
+	public static SpeedController frontLeftCIM;
+	public static SpeedController frontRightCIM;
+	public static SpeedController elevCIM;
 	
 	public static Gyro gyro;
 	
@@ -26,14 +26,50 @@ public class RobotMap {
 	public static Encoder rightDriveEncoder;
 	public static Encoder elevEncoder;
 	
-	public static Relay lightRelay;
-	
 	public static Solenoid leftElev;
-	public static Solenoid rightElev;*/
+	public static Solenoid rightElev;
 	
+	// ***** PWN ***** //
 	
+	public static int 	FRONT_LEFT_DRIVE_CIM = 0,
+			  			FRONT_RIGHT_DRIVE_CIM = 1,
+			  			BACK_LEFT_DRIVE_CIM = 2,
+					  	BACK_RIGHT_DRIVE_CIM = 3,
+			  			ELEVATOR_CIM = 4;
+	
+	// ***** DIO ***** //
+	
+	public static int 	ELEVATOR_ENCODER_PORT_1 = 0,
+						ELEVATOR_ENCDER_PORT_2 = 1,
+						LEFT_DRIVE_ENCODER_PORT_1 = 2,
+						LEFT_DRIVE_ENCDER_PORT_2 = 3,
+						RIGHT_DRIVE_ENCODER_PORT_1 = 4,
+						RIGHT_DRIVE_ENCDER_PORT_2 = 5;
+	
+	// ***** PNC ***** //
+	
+	public static int	LEFT_PISTON_ON_ELEVATOR_PORT_1 = 0, 
+						LEFT_PISTON_ON_ELEVATOR_PORT_2 = 1,
+						RIGHT_PISTON_ON_ELEVATOR_PORT_1 = 2, 
+						RIGHT_PISTON_ON_ELEVATOR_PORT_2 = 3,
+						LEFT_PISTON_ELEVATOR_PORT_1 = 4, 
+						LEFT_PISTON_ELEVATOR_PORT_2 = 5,
+						RIGHT_PISTON_ELEVATOR_PORT_1 = 6, 
+						RIGHT_PISTON_ELEVATOR_PORT_2 = 7;
+	
+	// ***** ANALOG ***** //
+	
+	public static int	MAIN_GYRO = 0;
+	
+	// *****
 	
 	// ***** CONSTANTS ***** //
+	
+	public static final double GYRO_SENSITIVITY = 0.007;
+	
+	//Elevator
+	public static final double ELEV_DISTANCE = 100.0;
+	public static double ELEV_ENCODER_TRAVEL = 0;
 	
 	// PID
     public static final double DRIVETRAIN_KP = 10.0;
@@ -42,14 +78,11 @@ public class RobotMap {
     
     //Drive Constants
     public static double SENSITIVITY = 0.80;
-    //public static double leftPower = Utils.rampSpeed(SENSITIVITY / 1.0);
-    //public static double rightPower = Utils.rampSpeed(SENSITIVITY / 1.0);
+    public static double leftPower = Utils.rampSpeed(SENSITIVITY / 1.0);
+    public static double rightPower = Utils.rampSpeed(SENSITIVITY / 1.0);
     
-    // gyro
-    public static final int DRIVEBASE_GYRO_CHANNEL = 2;
-    public static final double DRIVEBASE_GYRO_SENSITIVITY = .007;   
     
- // Camera Stuff
+    // Camera Stuff
     public static final String CAMERA_ADDRESS = "10.47.16.11";
     public static final int CAMERA_BRIGHTNESS = 15;
     public static final int CAMERA_COMPRESSION = 0;
@@ -82,15 +115,12 @@ public class RobotMap {
     public static final int PRESSURE_SWITCH_DIO_CHANNEL = 1;
 	
 	/* Motors */
-    public static int LEFT_DRIVE_CIM = 0,
-    				  RIGHT_DRIVE_CIM = 1,
-    				  ELEVATOR_CIM = 2;
+    
     public static int DRIVE_STICK = 1,
     				  COMMAND_STICK = 2;
     
     /* Sensors */
-    public static final int MAIN_GYRO = 1;
-    public static final double GYRO_SENSITIVITY = 0.007;
+   
     
     
  // Axis indexes:

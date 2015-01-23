@@ -12,12 +12,14 @@ public class MoveMotor extends Command {
     public MoveMotor() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drivetrain);
+    	requires(Robot.elevator);
+    	setTimeout(2.5);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.moveMotor(0.8);
+    	Robot.elevator.moveElevCIM(0.6);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,17 +29,17 @@ public class MoveMotor extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.moveMotor(0.0);
+    	Robot.elevator.moveElevCIM(0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drivetrain.moveMotor(0.0);
+    	Robot.elevator.moveElevCIM(0.0);
     }
 }
