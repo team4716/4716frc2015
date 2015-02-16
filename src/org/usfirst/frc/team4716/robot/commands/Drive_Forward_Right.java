@@ -7,28 +7,32 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ResetElevatorEncoder extends Command {
+public class Drive_Forward_Right extends Command {
 
-    public ResetElevatorEncoder() {
-    	requires(Robot.elevator);
-    	setTimeout(0.1);
+    public Drive_Forward_Right() {
+    	requires(Robot.drivetrain);
     }
-
 
     protected void initialize() {
-    	Robot.elevator.encoderReset();
+    	Robot.drivetrain.reset();
     }
-    
+
     protected void execute() {
+    	Robot.drivetrain.tankDrive(1.0, 0.0);
     }
 
     protected boolean isFinished() {
-        return isTimedOut();
+    	if(Robot.drivetrain.getHeading() >= 90)
+    		return true;
+    	else
+    		return false;
     }
 
     protected void end() {
+    	Robot.drivetrain.driveSet(0);
     }
 
     protected void interrupted() {
+    	Robot.drivetrain.driveSet(0);;
     }
 }

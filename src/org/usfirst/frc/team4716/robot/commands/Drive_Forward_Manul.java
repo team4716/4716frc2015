@@ -7,38 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveMotorBack extends Command {
+public class Drive_Forward_Manul extends Command {
 
-    public MoveMotorBack() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.elevator);
-    	setTimeout(2.5);
+	
+    public Drive_Forward_Manul() {
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.elevator.moveElevCIM(-0.6);
-    	
+    	Robot.drivetrain.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drivetrain.tankDrive(0, -0.7);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.moveElevCIM(0);
+    	Robot.drivetrain.driveSet(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.elevator.moveElevCIM(0);
+    	Robot.drivetrain.driveSet(0);
     }
 }
