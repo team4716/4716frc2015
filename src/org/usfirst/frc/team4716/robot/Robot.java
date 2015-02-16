@@ -1,16 +1,26 @@
 
 package org.usfirst.frc.team4716.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4716.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4716.robot.commands.AutoDoNothing;
+import org.usfirst.frc.team4716.robot.commands.AutoMoveForwardStraight;
 import org.usfirst.frc.team4716.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4716.robot.subsystems.Elevator;
-import org.usfirst.frc.team4716.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team4716.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team4716.robot.subsystems.HoldSystem;
+import org.usfirst.frc.team4716.robot.subsystems.Lift;
+
+import com.ni.vision.NIVision;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,13 +31,23 @@ import org.usfirst.frc.team4716.robot.subsystems.Pneumatics;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Elevator elevator = new Elevator();
-	public static final Pneumatics pneumatics = new Pneumatics();
+	public static final Lift lift = new Lift();
+	public static final HoldSystem holdsystem = new HoldSystem();
+	//public static GlobalSensors globalsensors;
 	public static OI oi;
+	public NIVision.Rect rect;
 
     Command autonomousCommand;
+    SendableChooser autoChooser2;
+    
+    Compressor compress;
+    
+    CameraServer server1;
+    SerialPort serial;
+    
+    Timer gameTimer;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -35,9 +55,25 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
+		
+		//compress.enabled();
+		
+		server1 = CameraServer.getInstance();		
+		server1.setQuality(30);
+		server1.startAutomaticCapture("cam0");
+		gameTimer = new Timer();
+        gameTimer.start();
+
 		elevator.encoderReset();
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+		drivetrain.reset();
+		autoChooser2 = new SendableChooser();
+        autoChooser2.addDefault("Auto Nothing", new AutoDoNothing());
+        autoChooser2.addObject("Auto Move Straight", new AutoMoveForwardStraight());
+        SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData("AutoMode Chooser", autoChooser2);
+        
+        autonomousCommand = new AutoDoNothing();
+
     }
 	
 	public void disabledPeriodic() {
@@ -45,8 +81,12 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+    	drivetrain.gyroReset();
+    	gameTimer.reset();
+
+    	autonomousCommand = (Command) autoChooser2.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
+        
     }
 
     /**
@@ -57,29 +97,35 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         elevator.encoderReset();
+        gameTimer.reset();
+        drivetrain.reset();
+        
     }
 
-    /**
-     * This function is called when the disabled button is hit.
-     * You can use it to reset subsystems before shutting down.
-     */
     public void disabledInit(){
-
     }
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
 
+    public void teleopPeriodic() {
+    	drivetrain.smartDashLog();
     	elevator.smartDashLog();
+    	holdsystem.smartDashLog();
+    	lift.smartDashLog();
+
+    	SmartDashboard.putData(drivetrain);
+        SmartDashboard.putData(elevator);
+        SmartDashboard.putData(holdsystem);
+        SmartDashboard.putData(lift);
+        SmartDashboard.putNumber("Elapsed Time", gameTimer.get());
+        
+        SmartDashboard.putNumber("Drive Stick X", Robot.oi.getJoyX());
+        SmartDashboard.putNumber("Drive Stick Y", Robot.oi.getJoyY());
+        SmartDashboard.putNumber("Robot Speed", Math.abs(Robot.oi.getJoyY()));
+        
         Scheduler.getInstance().run();
+        
     }
     
     /**

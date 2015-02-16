@@ -9,8 +9,12 @@ public class ElevatorLiftProcess extends CommandGroup {
     
     public  ElevatorLiftProcess() {
     	addSequential(new ElevatorUp());
+    	addParallel(new HoldSystemRelease());
+    	addSequential(new StopElevator());
+    	addSequential(new HoldSystemLock());
     	addSequential(new ElevatorDown());
-    	addSequential(new ResetElevatorEncoder());
+    	addSequential(new StopElevator());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

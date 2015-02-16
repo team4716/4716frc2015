@@ -1,10 +1,5 @@
 package org.usfirst.frc.team4716.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
 
 
 /**
@@ -14,24 +9,10 @@ import edu.wpi.first.wpilibj.SpeedController;
  * floating around.
  */
 public class RobotMap {
-	
-	// ***** OBJECTS ***** //
-	public static SpeedController frontLeftCIM;
-	public static SpeedController frontRightCIM;
-	public static SpeedController elevCIM;
-	
-	public static Gyro gyro;
-	
-	public static Encoder leftDriveEncoder;
-	public static Encoder rightDriveEncoder;
-	public static Encoder elevEncoder;
-	
-	public static Solenoid leftElev;
-	public static Solenoid rightElev;
-	
+		
 	// ***** PWN ***** //
 	
-	public static int 	FRONT_LEFT_DRIVE_CIM = 0,
+	public static final int 	FRONT_LEFT_DRIVE_CIM = 0,
 			  			FRONT_RIGHT_DRIVE_CIM = 1,
 			  			BACK_LEFT_DRIVE_CIM = 2,
 					  	BACK_RIGHT_DRIVE_CIM = 3,
@@ -39,12 +20,12 @@ public class RobotMap {
 	
 	// ***** DIO ***** //
 	
-	public static int 	ELEVATOR_ENCODER_PORT_1 = 0,
-						ELEVATOR_ENCDER_PORT_2 = 1,
-						LEFT_DRIVE_ENCODER_PORT_1 = 2,
-						LEFT_DRIVE_ENCDER_PORT_2 = 3,
-						RIGHT_DRIVE_ENCODER_PORT_1 = 4,
-						RIGHT_DRIVE_ENCDER_PORT_2 = 5;
+	public static int 	ELEVATOR_ENCODER_PORT_1 = 4,
+						ELEVATOR_ENCDER_PORT_2 = 5,
+						LEFT_DRIVE_ENCODER_PORT_1 = 0,
+						LEFT_DRIVE_ENCDER_PORT_2 = 1,
+						RIGHT_DRIVE_ENCODER_PORT_1 = 2,
+						RIGHT_DRIVE_ENCDER_PORT_2 = 3;
 	
 	// ***** PNC ***** //
 	
@@ -83,7 +64,7 @@ public class RobotMap {
     
     
     // Camera Stuff
-    public static final String CAMERA_ADDRESS = "10.47.16.11";
+    public static final String CAMERA_ADDRESS = "axis-camera";
     public static final int CAMERA_BRIGHTNESS = 15;
     public static final int CAMERA_COMPRESSION = 0;
     public static final int CAMERA_COLOR_LEVEL = 100;

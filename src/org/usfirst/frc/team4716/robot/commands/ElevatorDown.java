@@ -10,40 +10,33 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ElevatorDown extends Command {
 
     public ElevatorDown() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.elevator);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.elevator.moveElevCIM(-0.6);
+    	Robot.elevator.moveElevCIM(0.6);
     	System.out.println("Elevator going down");
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Robot.elevator.getEncoderDistance() <= 0){
+    	
+    	if (Robot.elevator.getEncoderDistance() >= -100){
         	return true;
         } else {
         	return false;
         }
+        
+    	//return false;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
     	Robot.elevator.moveElevCIM(0);
-    	Robot.elevator.encoderReset();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.elevator.moveElevCIM(0);
-    	Robot.elevator.encoderReset();
     }
 }
