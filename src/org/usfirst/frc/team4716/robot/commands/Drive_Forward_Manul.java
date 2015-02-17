@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Drive_Forward_Manul extends Command {
 
 	
-    public Drive_Forward_Manul() {
+    public Drive_Forward_Manul(double time) {
     	requires(Robot.drivetrain);
+    	setTimeout(time);
     }
 
     // Called just before this Command runs the first time
@@ -21,12 +22,11 @@ public class Drive_Forward_Manul extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.tankDrive(0, -0.7);
+    	Robot.drivetrain.driveStraight(-0.5);
     }
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        	return false;
+        	return isTimedOut();
     }
 
     // Called once after isFinished returns true

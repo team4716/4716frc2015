@@ -133,16 +133,16 @@ public class DriveTrain extends Subsystem {
     		if (error > 0){
     			while(error >= 0 && error < 30)
     		{
-    	    	leftpow -= 0.05;
-    	    	rightpow += 0.05;
+    	    	leftpow -= 0.01;
+    	    	rightpow += 0.01;
     			error = leftRate - rightRate;
     	   	}
     			tankDrive(leftpow, rightpow);
     	    }else if (error < 0){
     	    	while(error <= 0 && error > -30)
     		{
-    	    	leftpow += 0.05;
-    	    	rightpow -= 0.05;
+    	    	leftpow += 0.01;
+    	    	rightpow -= 0.01;
     	    	error = leftRate - rightRate;
     	   	}
     	    	tankDrive(leftpow, rightpow);

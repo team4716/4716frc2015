@@ -8,6 +8,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoMoveForwardStraight extends CommandGroup {
     
     public  AutoMoveForwardStraight() {
-    	addSequential(new Drive_Forward_Manul());
+    	addSequential(new Drive_Forward_Manul(2.0));
     }
 }

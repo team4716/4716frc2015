@@ -18,11 +18,11 @@ public class Drive_Forward_Right extends Command {
     }
 
     protected void execute() {
-    	Robot.drivetrain.tankDrive(1.0, 0.0);
+    	Robot.drivetrain.tankDrive(0.6, -0.6);
     }
 
     protected boolean isFinished() {
-    	if(Robot.drivetrain.getHeading() >= 90)
+    	if(Math.abs(Robot.drivetrain.getHeading()) >= 90)
     		return true;
     	else
     		return false;

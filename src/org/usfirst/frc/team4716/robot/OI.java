@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4716.robot.commands.Drive_Forward;
 import org.usfirst.frc.team4716.robot.commands.Drive_Forward_Manul;
 import org.usfirst.frc.team4716.robot.commands.Drive_Manual_AutoStraight;
 import org.usfirst.frc.team4716.robot.commands.ElevatorDown;
@@ -62,8 +61,7 @@ public class OI {
 	public OI(){
 		
 		but1.whenPressed(new Drive_Manual_AutoStraight());
-		but2.whileHeld(new Drive_Forward());
-		but3.whileHeld(new Drive_Forward_Manul());
+		but3.whileHeld(new Drive_Forward_Manul(2.0));
 		
 		tbut1.whenPressed(new ElevatorLiftProcess());
 		tbut2.whenPressed(new HoldSystemLock());
