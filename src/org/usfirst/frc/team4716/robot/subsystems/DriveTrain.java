@@ -123,6 +123,37 @@ public class DriveTrain extends Subsystem {
     	return getleftRate() - getrightRate();
     }
     
+    public void driveStraight(double speed){
+    	double leftRate = getleftRate();
+    	double rightRate = getrightRate();
+    	double error = leftRate - rightRate;
+    	double leftpow = speed;
+    	double rightpow = speed;
+    	    	
+    		if (error > 0){
+    			while(error >= 0 && error < 30)
+    		{
+    	    	leftpow -= 0.05;
+    	    	rightpow += 0.05;
+    			error = leftRate - rightRate;
+    	   	}
+    			tankDrive(leftpow, rightpow);
+    	    }else if (error < 0){
+    	    	while(error <= 0 && error > -30)
+    		{
+    	    	leftpow += 0.05;
+    	    	rightpow -= 0.05;
+    	    	error = leftRate - rightRate;
+    	   	}
+    	    	tankDrive(leftpow, rightpow);
+    	    }else{
+    	    	tankDrive(leftpow, rightpow);
+    	    }
+    	    	
+     }
+    	    
+    	
+    
     public void smartDashLog(){
     	SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
     	SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
